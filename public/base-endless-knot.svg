@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="25" height="6" class="css-1j8o68f" xmlns="http://www.w3.org/2000/svg">
+    <defs id="SvgjsDefs1146">
+        <linearGradient id="SvgjsLinearGradient1153">
+            <stop id="SvgjsStop1154" stop-color="#00ff8f" offset="0"></stop>
+            <stop id="SvgjsStop1155" stop-color="#00a1ff" offset="1"></stop>
+        </linearGradient>
+    </defs>
+    <g id="SvgjsG1147" featurekey="symbolContainer"
+        fill="url(#SvgjsLinearGradient1153)">
+        <rect y="0" height="1" width="1" opacity="0"></rect>
+        <rect y="0" width="25" height="5"></rect>
+    </g>
+</svg>

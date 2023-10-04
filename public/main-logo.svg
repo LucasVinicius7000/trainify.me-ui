@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="100" height="60" xmlns="http://www.w3.org/2000/svg">
+    <defs id="SvgjsDefs1019">
+        <linearGradient id="SvgjsLinearGradient1026">
+            <stop id="SvgjsStop1027" stop-color="#00ff8f" offset="0"></stop>
+            <stop id="SvgjsStop1028" stop-color="#00a1ff" offset="1"></stop>
+        </linearGradient>
+        <linearGradient id="SvgjsLinearGradient1029">
+            <stop id="SvgjsStop1030" stop-color="#00ff8f" offset="0"></stop>
+            <stop id="SvgjsStop1031" stop-color="#00a1ff" offset="1"></stop>
+        </linearGradient>
+    </defs>
+
+    <g id="SvgjsG1020" featurekey="symbolContainer" transform="matrix(1,0,0,1,21,0)"
+        fill="url(#SvgjsLinearGradient1026)">
+        <path xmlns="http://www.w3.org/2000/svg" fill-rule="nonzero"
+            d="             M0,0             H58             V60             H0,0                          M4,4             v52             h50             v-52               ">
+        </path>
+    </g>
+    <g id="SvgjsG1021" featurekey="uHI19F-0"
+        transform="matrix(0.3726726158414977,0,0,0.3726726158414977,31.880380824829313,11.481730307309332)"
+        fill="url(#SvgjsLinearGradient1029)">
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="53.7373047,40.9291992 41.1098633,53.5673828 45.9472656,58.4042969 58.5742188,45.7773438 "></polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="65.0429688,39.3085938 68.8720703,35.4794922 73.9726563,40.5810547 61.0458984,54.4189453 65.9072266,59.2685547   83.5039063,40.4243164 68.8847656,25.7929688 60.2060547,34.4594727 ">
+        </polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="34.6401367,60.0244141 30.8115234,63.8535156 26.1069336,59.1484375 39.4775391,45.7773438 34.6401367,40.9291992   16.4208984,59.1484375 30.8115234,73.5517578 39.4775391,64.8740234 ">
+        </polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="52.0322266,75.796875 54.4814453,78.2441406 49.8359375,82.8896484 46.7392578,79.78125 59.6542969,65.9541016   54.8056641,61.09375 37.2089844,79.9375 49.8359375,92.5761719 64.1787109,78.2441406 56.7021484,70.7783203 ">
+        </polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="29.9355469,44.0131836 26.1069336,40.1845703 30.8115234,35.4794922 44.1826172,48.8500977 49.0317383,44.0131836   30.8115234,25.7929688 16.4208984,40.1845703 25.0986328,48.862793 ">
+        </polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="31.5546875,55.3173828 45.5600586,69.3222656 50.2446289,64.3203125 36.4013672,50.4775391 "></polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="49.0317383,24.9174805 45.203125,21.0883789 49.8359375,16.4433594 54.4814453,21.0883789 41.1098633,34.4594727   45.9472656,39.3085938 64.1787109,21.0883789 49.8359375,6.7573242 35.5166016,21.0883789 44.2182617,29.8027344 ">
+        </polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="68.6914063,44.5771484 55.5019531,31.3867188 50.6523438,36.2231445 64.0107422,49.5830078 "></polygon>
+        <polygon xmlns="http://www.w3.org/2000/svg"
+            points="70.4677734,56.0517578 73.5771484,59.1484375 68.8720703,63.8535156 55.5019531,50.4829102 50.6523438,55.3203125   68.8847656,73.5517578 83.2626953,59.1484375 75.1494141,51.0351563 ">
+        </polygon>
+    </g>
+</svg>

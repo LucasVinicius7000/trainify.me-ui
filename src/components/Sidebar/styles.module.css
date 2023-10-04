@@ -1,0 +1,47 @@
+@keyframes openSidebar {
+
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.sidebarOpening {
+    animation-name: openSidebar;
+    animation-duration: 0.55s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+}
+
+
+@keyframes closeSidebar {
+
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+        width: 0;
+    }
+}
+
+.sidebarClosing {
+    animation-name: closeSidebar;
+    animation-duration: 0.55s;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-direction: alternate;
+}
