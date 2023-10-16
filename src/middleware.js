@@ -10,6 +10,7 @@ export async function middleware(req, res) {
     const redirectUrl = new URL("/", req.url);
     let isProtectedPath = protectedPaths.some((path) => pathname.startsWith(path));
 
+
     if (isProtectedPath) {
         if (!token) return NextResponse.redirect(redirectUrl);
         else {
