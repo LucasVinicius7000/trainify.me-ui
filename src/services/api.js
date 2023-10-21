@@ -16,7 +16,7 @@ api.interceptors.response.use((response) => {
     return response;
 }, async (error) => {
     // Caso o token da api expire 
-    if (error.response.status === 401) {
+    if (error?.response?.status === 401) {
         // Obtem a sessão do usuário para pegar o refresh token
         let { user } = await getSession();
         try {
@@ -45,7 +45,7 @@ api.interceptors.response.use((response) => {
             return;
         }
     }
-    else return response;
+    else return error;
 });
 
 export default api;

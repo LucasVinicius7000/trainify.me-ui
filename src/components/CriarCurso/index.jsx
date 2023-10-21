@@ -48,13 +48,13 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId }) {
 
     const criarCurso = async () => {
         try {
-            debugger;
             let response = await api.post(`${API_HOST}/curso/criar`, {
                 Nome: watch("NomeCurso"),
                 OrganizacaoId: OrganizacaoId,
                 UsuarioCriadorId: UserId
             });
             if(response.data.isSuccess){
+                setCursoId(response?.data?.data?.id);
                 toast.success("Curso criado com sucesso.");
             }
         } catch (error) {
@@ -113,8 +113,8 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId }) {
         <div className="w-full flex justify-center mt-10">
             <AddAulaButton onClick={() => { openModalNovaAula() }} />
         </div>
-        <CustomModal isOpen={true} className="bg-black/95 border-none absolute top-0 gap-5 left-0 flex flex-col w-full justify-center items-center select-none">
-            <FormNovaAula />
+        <CustomModal isOpen={modalNovaAula} className="bg-black/95 border-none absolute top-0 gap-5 left-0 flex flex-col w-full justify-center items-center select-none">
+            <FormNovaAula cursoId={cursoId} onCancel={()=> setModalNovaAula(false)} />
         </CustomModal>
     </div>
 }
