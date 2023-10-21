@@ -7,6 +7,7 @@ const Input = React.forwardRef(({ type, className, id, ...rest }, ref) => {
         id={id}
         ref={ref}
         {...rest}
+        autoComplete="off"
     />
 })
 

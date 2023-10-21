@@ -50,11 +50,11 @@ export default function Sidebar({ items, children }) {
 
                 <hr className="border-[#94A3B8] w-[90%]" />
 
-
-                <div>1</div>
-                <div>2</div>
-                <div>3</div>
-
+                {
+                    items?.map((item) => {
+                        return <div className="p-2 w-[80%] text-center rounded-md hover:bg-[#16AB7A] cursor-pointer" onClick={() => { }} >{item?.name}</div>
+                    })
+                }
 
             </div>
             {children}

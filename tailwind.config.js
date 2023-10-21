@@ -7,5 +7,6 @@ module.exports = {
   ],
   plugins: [
     require('@tailwindcss/custom-forms'),
+    require('@vidstack/react/tailwind.cjs'),
   ],
 }

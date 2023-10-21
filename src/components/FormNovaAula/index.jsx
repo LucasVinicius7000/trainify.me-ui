@@ -17,7 +17,7 @@ import { MimeTypes } from "@/utils/enums";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-export default function FormNovaAula({ onCancel, cursoId, indiceUltimaAula = 1 }) {
+export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAula = 1 }) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [fileInput, setFileInput] = useState(null);
@@ -52,7 +52,7 @@ export default function FormNovaAula({ onCancel, cursoId, indiceUltimaAula = 1 }
     };
 
     const salvarAula = async () => {
-
+        setIsLoading(true);
         let listaAlternativas = [];
         let dadosAula;
 
@@ -116,9 +116,10 @@ export default function FormNovaAula({ onCancel, cursoId, indiceUltimaAula = 1 }
 
         }
 
+        debugger;
         let payload = {
             CursoId: cursoId,
-            IndiceAula: indiceUltimaAula++,
+            IndiceAula: indiceAula,
             TituloAula: watch("titulo"),
             TipoAula: watch("tipoAula"),
             DadosAula: dadosAula,
@@ -131,11 +132,14 @@ export default function FormNovaAula({ onCancel, cursoId, indiceUltimaAula = 1 }
             let response = await api.post(`${API_HOST}/aula/criar`, payload);
             if(response.data.isSuccess){
                 toast.success("Aula adicionada com sucesso.");
-                onCancel();
+                reloadCurso();
+                setIsLoading(false);
+                onCancel(true);
             }
 
         } catch (error) {
             toast.error("Ocorre um erro ao adicionar a aula.");
+            setIsLoading(false);
         }
         dadosAula = undefined;
         setValue("dadosAula", undefined);
@@ -268,10 +272,9 @@ export default function FormNovaAula({ onCancel, cursoId, indiceUltimaAula = 1 }
             <div className="w-full mt-4 flex items-center justify-end">
                 <div className="w-full flex items-center justify-end gap-2">
                     <Button text="Cancelar"
-                        onClick={() => onCancel()}
+                        onClick={() => onCancel(false)}
                         className="min-w-[110px] max-w-[110px] py-2 px-4 rounded-md w-full text-white text-sm text-center bg-gradient-to-r from-[#E00126] to-[#E00126]"></Button>
                     <Button
-                        //disabled={true}
                         text="Salvar Aula"
                         onClick={() => salvarAula()}
                         type="submit"
