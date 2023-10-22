@@ -4,21 +4,45 @@ import StyledButton from "@/components/StyledButton";
 import Image from "next/image";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { HiOutlineLogout } from "react-icons/hi";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SidebarContext } from "@/components/Sidebar";
 import { useSession } from "next-auth/react";
-import MainLogo from './../../../../public/main-logo2.svg';
-import CadastrarUsuarioForm from "@/components/CadastrarUsuarioForm";
+import MainLogo from './../../../../../../public/main-logo2.svg';
+import { useState } from "react";
 import { signOut } from "next-auth/react";
+import api from "@/services/api";
+import { toast } from "react-toastify";
+import CardListCurso from "@/components/CardListCurso";
 
-export default function HomeOrganizacao() {
+const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
+export default function CursosListar() {
 
     const { data, status } = useSession();
     const { openSidebar } = useContext(SidebarContext);
     const user = data?.user ? data?.user : undefined;
- 
-    return <div className='w-full min-h-screen'>
+    const [cursos, setCursos] = useState([]);
+
+    const listarCursos = async () => {
+        try {
+            let organizacaoId = user?.perfil?.id;
+            let response = await api.get(`${API_HOST}/curso/organizacao/buscar/${organizacaoId}`);
+            if (response.data.isSuccess) {
+                toast.success("Cursos listados com sucesso.");
+                setCursos(response.data.data);
+            }
+        } catch (error) {
+            toast.error("Falha ao listar cursos da organização.");
+        }
+    }
+
+    useEffect(() => {
+        if (user != undefined && cursos.length == 0) {
+            listarCursos();
+        }
+    },[cursos, user]);
+
+    return <div className="w-full h-full">
         <HeaderCriarCurso className="h-auto">
             <div className='w-full flex justify-start items-center'>
                 <div>
@@ -38,8 +62,15 @@ export default function HomeOrganizacao() {
                     </div>
                 </div></div>
         </HeaderCriarCurso>
-        <div className="w-full h-full flex items-center justify-start">
-            <CadastrarUsuarioForm OrganizacaoPertencenteId={user?.perfil?.id} />
+        <div className="w-[80%] mx-auto my-auto mt-6 p-4 space-y-4 select-none">
+            <h1 className='text-zinc-600 mb-6'>| Listar Cursos</h1>
+            <div className="w-full h-full">
+                {
+                    cursos.map((curso) => {
+                        return <CardListCurso data={curso} />
+                    })
+                }
+            </div>
         </div>
     </div>
 }

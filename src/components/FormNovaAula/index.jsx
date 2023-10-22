@@ -78,7 +78,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
             toast.warning("Adicione um vídeo a essa aula antes de continuar.");
             return;
         }
-        if(watch("tipoAula") == 0 || watch("tipoAula") == 1){
+        if (watch("tipoAula") == 0 || watch("tipoAula") == 1) {
             dadosAula = watch("arquivo");
             let mimeTypeName = dadosAula?.mimeType;
             dadosAula.mimeType = MimeTypes[mimeTypeName];
@@ -116,7 +116,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
 
         }
 
-        debugger;
+
         let payload = {
             CursoId: cursoId,
             IndiceAula: indiceAula,
@@ -127,10 +127,10 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
             Alternativas: listaAlternativas,
             AlternativaCorreta: watch("correta")
         }
-        
+
         try {
             let response = await api.post(`${API_HOST}/aula/criar`, payload);
-            if(response.data.isSuccess){
+            if (response.data.isSuccess) {
                 toast.success("Aula adicionada com sucesso.");
                 reloadCurso();
                 setIsLoading(false);
@@ -186,7 +186,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
                             multiple={false}
                             {...register("arquivo")}
                             onChange={async (e) => {
-                                if(e.target.files.length == 0) return;
+                                if (e.target.files.length == 0) return;
                                 setIsLoading(true);
                                 let fileData = await fileToBase64(e);
                                 if (watch("tipoAula") == 1 && fileData?.fileExtension != "pdf") {

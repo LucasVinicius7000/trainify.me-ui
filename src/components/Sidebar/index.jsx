@@ -6,6 +6,8 @@ import styles from "./styles.module.css";
 import StyledButton from "../StyledButton";
 import { AiOutlineClose } from 'react-icons/ai';
 import { createContext } from "react";
+import { useRouter } from 'next/navigation';
+import Loading from "../Loading";
 
 export const SidebarContext = createContext({});
 
@@ -22,8 +24,12 @@ export default function Sidebar({ items, children }) {
         elSidebar.classList.add(styles.sidebarClosing);
     }
 
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
     return <SidebarContext.Provider value={{ openSidebar }}>
         <div className="w-full min-h-screen flex flex-row justify-start items-start">
+            <Loading isLoading={isLoading} />
             <div className={`min-w-[250px] max-w-[280px] w-full bg-[#32464F]
                 flex flex-col justify-start gap-4 items-center text-white min-h-screen 
                 select-none z-50 absolute -translate-x-full`}
@@ -51,8 +57,15 @@ export default function Sidebar({ items, children }) {
                 <hr className="border-[#94A3B8] w-[90%]" />
 
                 {
-                    items?.map((item) => {
-                        return <div className="p-2 w-[80%] text-center rounded-md hover:bg-[#16AB7A] cursor-pointer" onClick={() => { }} >{item?.name}</div>
+                    items?.map((item, index) => {
+                        return <div
+                            key={item?.path + index}
+                            className="p-2 w-[80%] text-center rounded-md hover:bg-[#16AB7A] cursor-pointer"
+                            onClick={() => {
+                                closeSidebar();
+                                router.push(item?.path);
+                            }} >{item?.name}
+                        </div>
                     })
                 }
 

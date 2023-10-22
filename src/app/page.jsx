@@ -36,7 +36,7 @@ export default function Login() {
       case "Aluno":
         router.push("/aluno/home");
         break;
-      case "Organizacão":
+      case "Organizacao":
         router.push("organizacao/home");
         break;
       default:

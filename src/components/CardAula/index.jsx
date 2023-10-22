@@ -87,7 +87,7 @@ export default function CardAula(
                                 {
                                     alternativas?.map((alt) => {
                                         if (alt.id != alternativaCorreta)
-                                            return <span className="bg-red-500 text-yellow-50 font-semibold">* {alt.valor} <br></br></span>
+                                            return <span key={Math.random() + alt?.valor} className="bg-red-500 text-yellow-50 font-semibold">* {alt.valor} <br></br></span>
                                     })
                                 }
                             </div>

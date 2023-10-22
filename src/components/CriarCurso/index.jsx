@@ -145,7 +145,7 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
                             </StyledButton>
                         </div>
                         <div className="">
-                            <StyledButton className="bg-gradient-to-r from-[#E00126] to-[#E00126]">
+                            <StyledButton onClick={() => router.push(redirectionPage)} className="bg-gradient-to-r from-[#E00126] to-[#E00126]">
                                 <BiTrashAlt size={20} color="#f6f6f6" />
                             </StyledButton>
                         </div>
