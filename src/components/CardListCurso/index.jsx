@@ -62,6 +62,8 @@ export default function CardListCurso({ data }) {
         <CustomModal
             className="bg-black/75 border-none absolute top-0 left-0 flex w-full justify-center items-center"
             isOpen={isModalAlunosOpen}
+            requestToClose={()=> setIsModalAlunosOpen(false)}
+            closeWhenClickOutsideContent={true}
         >
             <SelectAlunos
                 organizacaoId={data?.organizacaoId}

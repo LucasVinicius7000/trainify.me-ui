@@ -1,4 +1,5 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { GiHamburgerMenu } from 'react-icons/gi';
 import StyledButton from "@/components/StyledButton";
 import { useContext, useEffect, useState } from "react";
@@ -8,53 +9,52 @@ import { signOut } from "next-auth/react";
 import { HiOutlineLogout } from 'react-icons/hi';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import MainLogo from "./../../../../public/main-logo2.svg";
+import MainLogo from "./../../../../../../public/main-logo2.svg";
 import api from '@/services/api';
 import { toast } from 'react-toastify';
-import CardCurso from '@/components/CardCurso';
-import { useRouter } from 'next/navigation';
+import Curso from "@/components/Curso";
+import { redirect } from "next/navigation";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
+export default function AssistirCurso({ params }) {
 
-export default function HomeAluno() {
-
-    const router = useRouter()
-
+    // {params.cursoId} 
     const { data, status } = useSession();
     const { openSidebar } = useContext(SidebarContext);
     const user = data?.user ? data?.user : undefined;
-    const [cursos, setCursos] = useState(null);
+    const router = useRouter();
+    const [cursoData, setCursoData] = useState(null);
 
 
-    const listarCursos = async () => {
-        if (user?.perfil?.id == undefined) {
-            toast.warn("Falha ao listar cursos. Não foi possível identificar o aluno.");
+    const getCursoEmAndamento = async () => {
+
+        if (!params.cursoId) {
+            toast.warn("Falha ao buscar curso. (Id inválido)");
             return;
         }
 
         try {
-            let response = await api.get(`${API_HOST}/curso/listar/aluno/${user?.perfil?.id}`);
-            if (response?.data?.isSuccess) {
-                toast.success("Cursos listados com sucesso.");
-                setCursos(response.data.data);
+            let response = await api.get(`${API_HOST}/curso/buscar/andamento/${params.cursoId}`);
+            if (response.data.isSuccess) {
+                setCursoData(response.data.data);
             }
-            else if (response?.response?.data?.clientMessage) {
-                toast.error(response?.response?.data?.clientMessage);
-            }
-            else if (response.response.data == "") throw new Error("Falha ao listar cursos.");
         } catch (error) {
-            toast.error(error);
+            if (typeof error === 'string') {
+                toast.error(error);
+            }
+            else toast.error("Falha ao buscar curso.");
+            router.push("./aluno/home");
         }
-    };
+    }
 
     useEffect(() => {
-        if (user && cursos == null) {
-            listarCursos();
+        if (params.cursoId && cursoData == null) {
+            getCursoEmAndamento();
         }
-    }, [user, cursos]);
+    }, [params, cursoData]);
 
-    return <div className='w-full min-h-screen'>
+    return <div className='w-full h-full min-h-screen'>
         <HeaderCriarCurso className="h-auto">
             <div className='w-full flex justify-start items-center'>
                 <div>
@@ -74,20 +74,12 @@ export default function HomeAluno() {
                     </div>
                 </div></div>
         </HeaderCriarCurso>
-        <div className="w-[80%] mx-auto my-auto mt-6 p-4 space-y-4 select-none">
-            <h1 className='text-zinc-600 mb-6'>Home | Meus Cursos</h1>
-            <div className='w-full flex items-center justify-evenly flex-wrap gap-8'>
-                {
-                    cursos?.map((curso) => {
-                        return <CardCurso
-                            nomeCurso={curso?.cursoBase?.nome}
-                            id={curso?.id}
-                            curso={curso}
-                            onClick={()=> { router.push(`home/curso/${curso?.id}`)}}
-                        />
-                    })
-                }
-            </div>
+        <div className="w-[80%] h-full mx-auto my-auto mt-6 p-4 space-y-4 select-none">
+            <h1 className='text-zinc-600 mb-6'>| {cursoData?.curso?.nome}</h1>
+            <Curso
+                curso={cursoData?.curso}
+                cursoEmAndamento={cursoData?.cursoEmAndamento}
+            />
         </div>
     </div>
 }

@@ -21,7 +21,7 @@ export default function CursosListar() {
     const { data, status } = useSession();
     const { openSidebar } = useContext(SidebarContext);
     const user = data?.user ? data?.user : undefined;
-    const [cursos, setCursos] = useState([]);
+    const [cursos, setCursos] = useState(null);
 
     const listarCursos = async () => {
         try {
@@ -37,7 +37,7 @@ export default function CursosListar() {
     }
 
     useEffect(() => {
-        if (user != undefined && cursos.length == 0) {
+        if (user != undefined && cursos == null) {
             listarCursos();
         }
     },[cursos, user]);
@@ -66,7 +66,7 @@ export default function CursosListar() {
             <h1 className='text-zinc-600 mb-6'>| Listar Cursos</h1>
             <div className="w-full h-full">
                 {
-                    cursos.map((curso) => {
+                    cursos?.map((curso) => {
                         return <CardListCurso data={curso} />
                     })
                 }

@@ -28,7 +28,7 @@ export default function Sidebar({ items, children }) {
     const router = useRouter();
 
     return <SidebarContext.Provider value={{ openSidebar }}>
-        <div className="w-full min-h-screen flex flex-row justify-start items-start">
+        <div className="w-full min-h-screen h-auto flex flex-row justify-start items-start">
             <Loading isLoading={isLoading} />
             <div className={`min-w-[250px] max-w-[280px] w-full bg-[#32464F]
                 flex flex-col justify-start gap-4 items-center text-white min-h-screen 
