@@ -21,7 +21,7 @@ api.interceptors.response.use((response) => {
         let { user } = await getSession();
         try {
             // Obtem um novo token e refresh token usando o refresh token antigo
-            let newAcessToken = (await api.post(`/Auth/refresh-token`, user.refreshToken)).data;
+            let newAcessToken = (await api.post(`/Auth/refresh-token`, user.refreshToken)).data;    
             if (newAcessToken) {
                 // Insere novo token no cabeçalho de autorização do axios
                 api.defaults.headers.common['Authorization'] = `Bearer ${newAcessToken.data.token}`;

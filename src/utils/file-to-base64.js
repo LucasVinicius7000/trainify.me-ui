@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 export async function fileToBase64(event) {
     return new Promise((resolve, rejects) => {
-
+        debugger;
         const file = event.target.files[0];
 
         if (file) {

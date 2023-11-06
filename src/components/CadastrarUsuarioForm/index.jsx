@@ -36,16 +36,10 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
             return;
         }
 
-        if (OrganizacaoPertencenteId == undefined) {
-            toast.error("Não é possível cadastrar um usuário sem as informações da organização.");
-            return;
-        }
-
         if (watch('userType') == undefined || watch('userType') == "") {
             toast.warn("Selecione o tipo de usuário antes de continuar.");
             return;
         }
-
 
         if (watch('userType') == "Aluno") {
             if (watch("dataNascimento") == undefined || watch("dataNascimento") == "") {
@@ -56,12 +50,31 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                 toast.warning("Digite o nome aluno antes de continuar.");
                 return;
             }
+            if (OrganizacaoPertencenteId == undefined) {
+                toast.error("Não é possível cadastrar um usuário sem as informações da organização.");
+                return;
+            }
+        }
+        
+        if (watch('userType') == 'Organizacao') {
+            if (watch('nomeFantasia') == undefined || watch('nomeFantasia') == "") {
+                toast.error("Digite o nome fantasia da organização antes de continuar.");
+                return;
+            }
+            if (watch('razaoSocial') == undefined || watch('razaoSocial') == "") {
+                toast.error("Digite a razão social da organização antes de continuar.");
+                return;
+            }
+            if (watch('cnpj') == undefined || watch('cnpj') == "") {
+                toast.error("Digite o CNJPJ da organização antes de continuar.");
+                return;
+            }
         }
 
         setIsLoading(true);
 
         let payload = {
-            Nome: watch("nomeAluno"),
+            Nome: watch('userType') == 'Organizacao' ? watch('nomeFantasia') : watch("nomeAluno"),
             DataNascimento: watch("dataNascimento"),
             Email: watch("email"),
             Senha: watch("senha"),
@@ -70,15 +83,19 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
             Sexo: watch("sexo")
         };
 
+        let response;
         try {
-            let response = await api.post(`${API_HOST}/user/criar`, payload);
+            response = await api.post(`${API_HOST}/user/criar`, payload);
             if (response.data.isSuccess) {
                 toast.success("Usuário cadastrado com sucesso.");
                 setIsLoading(false);
                 reset();
             }
         } catch (error) {
-            toast.error("Ocorreu um erro ao cadastrar o usuário.");
+            if(response?.response?.data?.clientMessage != undefined || response?.response?.data?.clientMessage != null){
+                toast.error(response?.response?.data?.clientMessage);
+            }
+            else toast.error("Ocorreu um erro ao cadastrar o usuário.");
         }
         setIsLoading(false);
     };
@@ -113,24 +130,6 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                         autoComplete="off"
                         render={({ field }) => (
                             <InputFloatingLabel label="Nome do Aluno" {...field} type="text" className="w-full border my-3 p-2 rounded" />
-                        )}
-                    />
-                    <Controller
-                        name="email"
-                        control={control}
-                        defaultValue=""
-                        autoComplete="off"
-                        render={({ field }) => (
-                            <InputFloatingLabel label="Email" {...field} type="text" className="w-full border my-3 p-2 rounded" autocomplete="new-password" />
-                        )}
-                    />
-                    <Controller
-                        name="senha"
-                        control={control}
-                        defaultValue=""
-                        autoComplete="off"
-                        render={({ field }) => (
-                            <InputFloatingLabel label="Senha" {...field} className="w-full border my-3 p-2 rounded" type="password" autocomplete="new-password" />
                         )}
                     />
                     <div className='w-full mt-4'>
@@ -202,6 +201,25 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                     />
                 </div>
             )}
+
+            <Controller
+                name="email"
+                control={control}
+                defaultValue=""
+                autoComplete="off"
+                render={({ field }) => (
+                    <InputFloatingLabel label="Email" {...field} type="text" className="w-full border my-3 p-2 rounded" autocomplete="new-password" />
+                )}
+            />
+            <Controller
+                name="senha"
+                control={control}
+                defaultValue=""
+                autoComplete="off"
+                render={({ field }) => (
+                    <InputFloatingLabel label="Senha" {...field} className="w-full border my-3 p-2 rounded" type="password" autocomplete="new-password" />
+                )}
+            />
 
             <Button onClick={() => { cadastrarUsuario() }} type="submit" className="py-2 px-4 text-center bg-gradient-to-r from-[#00ff918c] to-[#00a1ff] rounded-md w-full text-white text-sm hover:to-emerald-500 hover:from-emerald-500">Cadastrar</Button>
         </div>

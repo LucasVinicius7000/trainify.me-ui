@@ -13,6 +13,7 @@ import { HiOutlineLogout } from 'react-icons/hi';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import MainLogo from "./../../../../public/main-logo2.svg";
+import CadastrarUsuarioForm from '@/components/CadastrarUsuarioForm';
 
 export default function AdminHome() {
 
@@ -41,18 +42,11 @@ export default function AdminHome() {
                     </div>
                 </div></div>
         </HeaderCriarCurso>
-        <div className="p-6 w-[100%] h-full bg-white overflow-scroll no-scrollbar">
-            <h1 className="font-semibold text-zinc-700 text-xl mb-8">Home | Cadastrar Usuários</h1>
+        <div className="w-[80%] h-full mx-auto my-auto mt-6 p-4 space-y-4 select-none">
+            <h1 className="text-zinc-600 mb-6">Home | Cadastrar Usuários</h1>
+            <CadastrarUsuarioForm OrganizacaoPertencenteId={user?.perfil?.id} />
         </div>
     </div>;
 
 
 }
-
-/*
-    <CriarCurso
-        redirectionPage={"/"}
-        OrganizacaoId={3}
-        serId={"4d5c29fb-5637-4cf7-b471-e7b4a4da56ff"}
-    /> 
-*/

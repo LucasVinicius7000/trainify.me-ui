@@ -52,7 +52,6 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
     };
 
     const salvarAula = async () => {
-        setIsLoading(true);
         let listaAlternativas = [];
         let dadosAula;
 
@@ -80,6 +79,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
         }
         if (watch("tipoAula") == 0 || watch("tipoAula") == 1) {
             dadosAula = watch("arquivo");
+            debugger;
             let mimeTypeName = dadosAula?.mimeType;
             dadosAula.mimeType = MimeTypes[mimeTypeName];
             dadosAula.Base64Arquivo = dadosAula.base64String;
@@ -128,6 +128,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
             AlternativaCorreta: watch("correta")
         }
 
+        setIsLoading(true);
         try {
             let response = await api.post(`${API_HOST}/aula/criar`, payload);
             if (response.data.isSuccess) {
