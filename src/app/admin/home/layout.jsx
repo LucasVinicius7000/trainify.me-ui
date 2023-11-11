@@ -8,11 +8,11 @@ export default function AdminHomeLayout({ children }) {
             items={[{
                 name: "Home | Cadastrar",
                 path: "/admin/home"
-            },
+            }/*,
             {
                 name: "Listar usuários",
                 path: "/admin/usuarios"
-            }]}
+            }*/]}
         >
             {children}
         </Sidebar>

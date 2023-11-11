@@ -79,7 +79,6 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
         }
         if (watch("tipoAula") == 0 || watch("tipoAula") == 1) {
             dadosAula = watch("arquivo");
-            debugger;
             let mimeTypeName = dadosAula?.mimeType;
             dadosAula.mimeType = MimeTypes[mimeTypeName];
             dadosAula.Base64Arquivo = dadosAula.base64String;

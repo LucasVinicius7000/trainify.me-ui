@@ -10,6 +10,8 @@ import Loading from "../Loading";
 import { toast } from 'react-toastify';
 import { AiOutlineDelete } from 'react-icons/ai';
 import api from "@/services/api";
+import '@vidstack/react/player/styles/default/theme.css';
+import '@vidstack/react/player/styles/default/layouts/video.css';
 
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;

@@ -43,7 +43,7 @@ export default function AdminHome() {
                 </div></div>
         </HeaderCriarCurso>
         <div className="w-[80%] h-full mx-auto my-auto mt-6 p-4 space-y-4 select-none">
-            <h1 className="text-zinc-600 mb-6">Home | Cadastrar Usuários</h1>
+            {/* <h1 className="text-zinc-600 mb-6">Home | Cadastrar Usuários</h1> */}
             <CadastrarUsuarioForm OrganizacaoPertencenteId={user?.perfil?.id} />
         </div>
     </div>;

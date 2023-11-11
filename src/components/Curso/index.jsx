@@ -1,6 +1,6 @@
 "use client"
 import NavigationAulaButton from "../NavigationAulaButton"
-import { MediaPlayer, MediaProvider } from '@vidstack/react';
+import { MediaPlayer, MediaProvider, MediaPlayerInstance } from '@vidstack/react';
 import {
     defaultLayoutIcons,
     DefaultVideoLayout,
@@ -13,11 +13,15 @@ import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import Alternativa from "../Alternativa";
+import { useStore } from "@vidstack/react";
+import { useRef } from "react";
 
 
 export default function Curso({ curso, cursoEmAndamento }) {
 
 
+    const mediaRef = useRef(null);
+    const { duration } = useStore(MediaPlayerInstance, mediaRef);
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
     const [aulaAtual, setAulaAtual] = useState(null);
 
@@ -27,6 +31,8 @@ export default function Curso({ curso, cursoEmAndamento }) {
             setAulaAtual(primeiraAula[0]);
         }
     }, [curso]);
+
+    console.log(aulaAtual);
 
     const navigateAula = (navigate) => {
         let indiceAtual = aulaAtual?.indice;
@@ -53,9 +59,17 @@ export default function Curso({ curso, cursoEmAndamento }) {
         <div className="w-full flex justify-center items-center">
             <div className="w-[80%] h-[550px] max-[480px]:w-full max-[480px]:h-full">
                 {
-                    aulaAtual?.tipoAula == 0 && <MediaPlayer className="z-0" viewType="video" src={aulaAtual?.videoUrl}>
+                    aulaAtual?.tipoAula == 0 && <MediaPlayer
+                        controls={false}
+                        className="z-0"
+                        viewType="video"
+                        load="eager"
+                        preload="auto"
+                        ref={mediaRef}
+                        src={aulaAtual?.videoUrl}
+                    >
                         <MediaProvider />
-                        <DefaultVideoLayout icons={defaultLayoutIcons} />
+                        <DefaultVideoLayout asChild icons={defaultLayoutIcons} />
                     </MediaPlayer>
                 }
                 {
@@ -90,11 +104,13 @@ export default function Curso({ curso, cursoEmAndamento }) {
         </div>
 
         <div className="px-4 mt-8 w-full flex justify-between">
-            <NavigationAulaButton
-                direction={false}
-                content={'Aula Anterior'}
-                onClick={() => navigateAula(false)}
-            />
+            {
+                aulaAtual?.indice > 1 ? <NavigationAulaButton
+                    direction={false}
+                    content={'Aula Anterior'}
+                    onClick={() => navigateAula(false)}
+                /> : <div></div>
+            }
             <NavigationAulaButton
                 content={'Próxima Aula'}
                 onClick={() => navigateAula(true)}

@@ -196,7 +196,7 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                         defaultValue=""
                         autoComplete="off"
                         render={({ field }) => (
-                            <InputFloatingLabel label="CNPJ"  {...field} type="text" className="w-full border p-2 rounded" />
+                            <InputFloatingLabel label="CNPJ"  {...field} type="tel" className="w-full border p-2 rounded" />
                         )}
                     />
                 </div>
@@ -208,7 +208,7 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                 defaultValue=""
                 autoComplete="off"
                 render={({ field }) => (
-                    <InputFloatingLabel label="Email" {...field} type="text" className="w-full border my-3 p-2 rounded" autocomplete="new-password" />
+                    <InputFloatingLabel label="Email" {...field} type="text" className="w-full border my-3 p-2 rounded" autoComplete="new-password" />
                 )}
             />
             <Controller
@@ -217,7 +217,7 @@ function CadastrarUsuarioForm({ OrganizacaoPertencenteId, TreinadorDoAlunoId }) 
                 defaultValue=""
                 autoComplete="off"
                 render={({ field }) => (
-                    <InputFloatingLabel label="Senha" {...field} className="w-full border my-3 p-2 rounded" type="password" autocomplete="new-password" />
+                    <InputFloatingLabel label="Senha" {...field} className="w-full border my-3 p-2 rounded" type="password" autoComplete="new-password" />
                 )}
             />
 
