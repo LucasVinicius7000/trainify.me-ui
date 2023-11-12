@@ -14,13 +14,14 @@ import api from '@/services/api';
 import { toast } from 'react-toastify';
 import Curso from "@/components/Curso";
 import { redirect } from "next/navigation";
+import { PiEyeDuotone } from 'react-icons/pi';
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-export default function AssistirCurso({ params }) {
+export default function PreviewCurso({ params }) {
 
-    // {params.cursoId} 
     const { data, status } = useSession();
+    console.log(data);
     const { openSidebar } = useContext(SidebarContext);
     const user = data?.user ? data?.user : undefined;
     const router = useRouter();
@@ -35,7 +36,7 @@ export default function AssistirCurso({ params }) {
         }
 
         try {
-            let response = await api.get(`${API_HOST}/curso/buscar/andamento/${params.cursoId}`);
+            let response = await api.get(`${API_HOST}/curso/buscar/${params.cursoId}`);
             if (response.data.isSuccess) {
                 setCursoData(response.data.data);
             }
@@ -44,7 +45,6 @@ export default function AssistirCurso({ params }) {
                 toast.error(error);
             }
             else toast.error("Falha ao buscar curso.");
-            router.push("./aluno/home");
         }
     }
 
@@ -63,9 +63,16 @@ export default function AssistirCurso({ params }) {
                     </StyledButton>
                 </div>
 
+                <div className="ml-6">
+                    <div className="flex justify-center items-center gap-4 border-spacing-0.5 border-white rounded-xl border-2 p-2">
+                        <PiEyeDuotone size={30} color="white" />
+                        <h2 className="text-white select-none">Modo Pré-visualização</h2>
+                    </div>
+                </div>
+
                 <div className='ml-auto flex justify-center items-center gap-2'>
                     <div className='flex justify-start items-center gap-1'>
-                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} alt="Logo" /> {user?.perfil?.nome}🙋‍♂️</span>
+                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} alt="Logo" /> {user?.perfil?.nomeFantasia}🙋‍♂️</span>
                     </div>
                     <div className=''>
                         <StyledButton className="bg-gradient-to-r from-red-600 to-red-600" onClick={() => { signOut({ redirect: "/" }); }}>
@@ -75,10 +82,11 @@ export default function AssistirCurso({ params }) {
                 </div></div>
         </HeaderCriarCurso>
         <div className="w-[80%] h-full mx-auto my-auto mt-6 p-4 space-y-4 select-none">
-            <h1 className='text-zinc-600 mb-6'>| {cursoData?.curso?.nome}</h1>
+            <h1 className='text-zinc-600 mb-6'>| {cursoData?.nome}</h1>
             <Curso
-                curso={cursoData?.curso}
-                cursoEmAndamento={cursoData?.cursoEmAndamento}
+                curso={cursoData}
+                //cursoEmAndamento={cursoData?.cursoEmAndamento}
+                previewMode={true}
             />
         </div>
     </div>

@@ -23,7 +23,7 @@ import Loading from "../Loading";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirectionPage }) {
+export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirectionPage, editionMode = false, previewMode = false }) {
 
 
     useEffect(() => {
@@ -48,6 +48,7 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
             register,
             handleSubmit,
             watch,
+            setValue,
             formState: { errors }
         } = useForm();
 
@@ -63,16 +64,39 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
             return;
 
         setIsLoading(true);
-        try {
-            let response = await api.get(`${API_HOST}/curso/ativar/${cursoId}`);
-            if (response.data.isSuccess) {
-                toast.success("Curso criado com sucesso.");
-                router.push(redirectionPage);
+        if (!editionMode) {
+            try {
+                let response = await api.get(`${API_HOST}/curso/ativar/${cursoId}`);
+                if (response.data.isSuccess) {
+                    toast.success("Curso criado com sucesso.");
+                    router.push(redirectionPage);
+                }
+            } catch (error) {
+                toast.error("Erro ao salvar o curso.");
             }
-        } catch (error) {
-            toast.error("Erro ao salvar o curso.");
+        }
+        else {
+            await atualizarCurso();
+            router.push(redirectionPage);
         }
         setIsLoading(false);
+    };
+
+    const atualizarCurso = async () => {
+        try {  
+            let response = await api.post(`${API_HOST}/curso/atualizar`, {
+                Nome: watch("NomeCurso"),
+                OrganizacaoId: OrganizacaoId,
+                UsuarioCriadorId: UserId,
+                CursoId: cursoId
+            });
+            if (response.data.isSuccess) {
+                toast.success(response.data.clientMessage);
+                setCursoId(response?.data?.data?.id);
+            }
+        } catch (error) {
+            toast.error("Ocorre um erro ao criar o curso.");
+        }
     };
 
     const criarCurso = async () => {
@@ -113,11 +137,20 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
                 setAulas(aulaData);
                 let ultimaAula = aulaData[aulaData.length - 1];
                 setIndiceAula(ultimaAula?.indice + 1);
+                if (editionMode) {
+                    setValue('NomeCurso', cursoData.nome);
+                }
             }
         } catch (error) {
             toast.error("Falha ao buscar o curso atual.");
         }
     };
+
+    useEffect(() => {
+        if (editionMode && cursoId != null) {
+            buscarCurso(cursoId);
+        }
+    }, [cursoId])
 
     return <div className="w-full min-h-screen">
         <Loading isLoading={isLoading} />
@@ -181,9 +214,6 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
             <FormNovaAula
                 cursoId={cursoId}
                 onCancel={(newAula) => {
-                    // if (newAula) {
-                    //     setIndiceAula((value) => value + 1);
-                    // }
                     setModalNovaAula(false);
                 }}
                 indiceAula={indiceAula}

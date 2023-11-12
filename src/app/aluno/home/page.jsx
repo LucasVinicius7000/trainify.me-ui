@@ -65,7 +65,7 @@ export default function HomeAluno() {
 
                 <div className='ml-auto flex justify-center items-center gap-2'>
                     <div className='flex justify-start items-center gap-1'>
-                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} /> {user?.perfil?.nome}🙋‍♂️</span>
+                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} alt="Logo" /> {user?.perfil?.nome}🙋‍♂️</span>
                     </div>
                     <div className=''>
                         <StyledButton className="bg-gradient-to-r from-red-600 to-red-600" onClick={() => { signOut({ redirect: "/" }); }}>
@@ -76,7 +76,7 @@ export default function HomeAluno() {
         </HeaderCriarCurso>
         <div className="w-[80%] mx-auto my-auto mt-6 p-4 space-y-4 select-none">
             <h1 className='text-zinc-600 mb-6'>Home | Meus Cursos</h1>
-            <div className='w-full flex items-center justify-evenly flex-wrap gap-8'>
+            <div className='w-full flex items-center justify-start flex-wrap gap-8'>
                 {
                     cursos?.map((curso) => {
                         return <CardCurso

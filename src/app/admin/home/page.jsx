@@ -33,7 +33,7 @@ export default function AdminHome() {
 
                 <div className='ml-auto flex justify-center items-center gap-2'>
                     <div className='flex justify-start items-center gap-1'>
-                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} /> {user?.userName}🙋‍♂️</span>
+                        <span className='text-yellow-50 w-[250px] max-[480px]:w-[100%] text-center'>Bem vindo(a) ao TrainifyMe <Image className='inline' src={MainLogo} width={30} height={30} alt="Logo"  /> {user?.userName}🙋‍♂️</span>
                     </div>
                     <div className=''>
                         <StyledButton className="bg-gradient-to-r from-red-600 to-red-600" onClick={() => { signOut({ redirect: "/" }); }}>

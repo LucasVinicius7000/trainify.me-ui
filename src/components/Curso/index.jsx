@@ -18,7 +18,7 @@ import { useRef } from "react";
 import { toast } from "react-toastify";
 import api from "@/services/api";
 
-export default function Curso({ curso, cursoEmAndamento }) {
+export default function Curso({ curso, cursoEmAndamento, previewMode = false }) {
 
     const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
     const mediaRef = useRef(null);
@@ -40,10 +40,10 @@ export default function Curso({ curso, cursoEmAndamento }) {
             if (aulaAnterior == null || aulaAnterior == undefined) return;
             setAulaAtual(aulaAnterior);
         }
-        else {
+        else { 
             debugger;
             let proximaAula = curso?.aulas.find((aula) => aula.indice == (indiceAtual + 1));
-            if (cursoEmAndamento.statusCurso != 3) {
+            if (cursoEmAndamento?.statusCurso != 3 && !previewMode) {
                 await concluirAulaAtual(aulaAtual, cursoEmAndamento.id);
             }
             if (proximaAula == null || proximaAula == undefined) return;
