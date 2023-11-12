@@ -37,6 +37,9 @@ export default function Login() {
         router.push("/aluno/home");
         break;
       case "Organizacao":
+        if(window.location.pathname.includes("organizacao")){
+          return;
+        }
         router.push("organizacao/home");
         break;
       default:
