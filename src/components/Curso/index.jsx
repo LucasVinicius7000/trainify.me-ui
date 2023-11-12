@@ -15,11 +15,12 @@ import { defaultLayoutPlugin } from '@react-pdf-viewer/default-layout';
 import Alternativa from "../Alternativa";
 import { useStore } from "@vidstack/react";
 import { useRef } from "react";
-
+import { toast } from "react-toastify";
+import api from "@/services/api";
 
 export default function Curso({ curso, cursoEmAndamento }) {
 
-
+    const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
     const mediaRef = useRef(null);
     const { duration } = useStore(MediaPlayerInstance, mediaRef);
     const defaultLayoutPluginInstance = defaultLayoutPlugin();
@@ -32,9 +33,7 @@ export default function Curso({ curso, cursoEmAndamento }) {
         }
     }, [curso]);
 
-    console.log(aulaAtual);
-
-    const navigateAula = (navigate) => {
+    const navigateAula = async (navigate) => {
         let indiceAtual = aulaAtual?.indice;
         if (!navigate) {
             let aulaAnterior = curso?.aulas.find((aula) => aula.indice == (indiceAtual - 1));
@@ -42,9 +41,24 @@ export default function Curso({ curso, cursoEmAndamento }) {
             setAulaAtual(aulaAnterior);
         }
         else {
+            debugger;
             let proximaAula = curso?.aulas.find((aula) => aula.indice == (indiceAtual + 1));
+            if (cursoEmAndamento.statusCurso != 3) {
+                await concluirAulaAtual(aulaAtual, cursoEmAndamento.id);
+            }
             if (proximaAula == null || proximaAula == undefined) return;
             setAulaAtual(proximaAula);
+        }
+    }
+
+    const concluirAulaAtual = async (aula, cursoId) => {
+        try {
+            let response = await api.get(`${API_HOST}/aula/concluir?cursoAndamentoId=${cursoId}&indiceAulaAtual=${aula?.indice}`);
+            if(response?.data?.isSuccess){
+                toast.success(response?.data?.clientMessage);
+            }
+        } catch (error) {
+            toast.error("Falha ao concluir aula atual.");
         }
     }
 

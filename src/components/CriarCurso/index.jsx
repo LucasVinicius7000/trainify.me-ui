@@ -111,6 +111,8 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
                 let aulaData = response.data.data?.aulas;
                 setCurso(cursoData);
                 setAulas(aulaData);
+                let ultimaAula = aulaData[aulaData.length - 1];
+                setIndiceAula(ultimaAula?.indice + 1);
             }
         } catch (error) {
             toast.error("Falha ao buscar o curso atual.");
@@ -179,9 +181,9 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
             <FormNovaAula
                 cursoId={cursoId}
                 onCancel={(newAula) => {
-                    if (newAula) {
-                        setIndiceAula((value) => value + 1);
-                    }
+                    // if (newAula) {
+                    //     setIndiceAula((value) => value + 1);
+                    // }
                     setModalNovaAula(false);
                 }}
                 indiceAula={indiceAula}

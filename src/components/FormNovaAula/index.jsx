@@ -132,7 +132,7 @@ export default function FormNovaAula({ onCancel, reloadCurso, cursoId, indiceAul
             let response = await api.post(`${API_HOST}/aula/criar`, payload);
             if (response.data.isSuccess) {
                 toast.success("Aula adicionada com sucesso.");
-                reloadCurso();
+                await reloadCurso();
                 setIsLoading(false);
                 onCancel(true);
             }
