@@ -72,7 +72,7 @@ export default function CardListCurso({ data }) {
                 </div>
             </StyledButton>
             <StyledButton
-                onClick={() => { router.push(`./../../cursos/preview/${data?.id}`) }} className="bg-gradient-to-r from-[#00FF48] to-[#00FF5C] w-56 h-auto text-yellow-50">
+                onClick={() => { router.push(`./../../cursos/preview/${data?.id}`) }} className="bg-gradient-to-r from-[#00ff48] to-[#00ff5C] w-56 h-auto text-yellow-50">
                 <div className="flex gap-2 items-center justify-start w-full pl-5">
                     <PiEyeDuotone size={24} color="white" />&nbsp;Pré-visualização
                 </div>
