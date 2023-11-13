@@ -23,7 +23,7 @@ import Loading from "../Loading";
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
-export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirectionPage, editionMode = false, previewMode = false }) {
+export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirectionPage, editionMode = false }) {
 
 
     useEffect(() => {
@@ -83,7 +83,7 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
     };
 
     const atualizarCurso = async () => {
-        try {  
+        try {
             let response = await api.post(`${API_HOST}/curso/atualizar`, {
                 Nome: watch("NomeCurso"),
                 OrganizacaoId: OrganizacaoId,
@@ -146,11 +146,23 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
         }
     };
 
+    const deleteCurso = async () => {
+        try {
+            let response = await api.get(`${API_HOST}/curso/excluir/${cursoId}`);
+            if (response.data.isSuccess) {
+                toast.success("Curso deletado com sucesso.");
+                router.push(redirectionPage);
+            }
+        } catch (error) {
+            toast.error("Falha ao deletar curso.");
+        }
+    }
+
     useEffect(() => {
         if (editionMode && cursoId != null) {
             buscarCurso(cursoId);
         }
-    }, [cursoId])
+    }, [cursoId]);
 
     return <div className="w-full min-h-screen">
         <Loading isLoading={isLoading} />
@@ -180,7 +192,12 @@ export default function CriarCurso({ id = null, OrganizacaoId, UserId, redirecti
                             </StyledButton>
                         </div>
                         <div className="">
-                            <StyledButton onClick={() => router.push(redirectionPage)} className="bg-gradient-to-r from-[#E00126] to-[#E00126]">
+                            <StyledButton onClick={async () => {
+                                if (editionMode) {
+                                    await deleteCurso();
+                                }
+                                else router.push(redirectionPage);
+                            }} className="bg-gradient-to-r from-[#E00126] to-[#E00126]">
                                 <BiTrashAlt size={20} color="#f6f6f6" />
                             </StyledButton>
                         </div>
